@@ -16,6 +16,7 @@ resource "null_resource" "ansible" {
       password = var.ssh_pass
       host = aws_instance.instance.public_ip
     }
+
     inline = [
       "sudo pip.11 install ansible",
       "ansible-pull -i localhost, -u https://github.com/donthi123/expense-ansible expense.yml -e env=${var.env} -e role_name=${var.component}"
