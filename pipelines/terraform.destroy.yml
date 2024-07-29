@@ -13,6 +13,7 @@ pipelines:
           fetch_materials: true
           environment_variables:
             env: dev
+            TF_VAR_vault_token: "AES:SGvlYvZL4zR4fUNCKKnwbA==:Nev7o0FC71x+QNDwZXW8pg=="
           approval:
             type: manual
           jobs:
