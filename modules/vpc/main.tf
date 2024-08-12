@@ -35,6 +35,6 @@ resource "aws_subnet" "frontend" {
   availability_zone = var.availability_zones[count.index]
 
   tags = {
-    Name = "${var.env}-frontend_subnets-${count.index+1}"
+    Name = "${var.env}-frontend_subnet-${count.index+1}"
   }
 }
