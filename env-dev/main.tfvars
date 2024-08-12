@@ -5,7 +5,11 @@ zone_id = "Z0989081MR5EB71EZVVK"
 
 #vpc
 vpc_cidr_block = "10.10.0.0/24"
-subnet_cidr_block = "10.10.0.0/24"
 default_vpc_cidr = "172.31.0.0/16"
 default_vpc_id = "vpc-0f450660fc557f380"
 default_route_table_id = "rtb-0fa092c875224fd5d"
+
+frontend_subnets = ["10.10.0.0/27", "10.10.0.32/27"]
+backend_subnets   = ["10.10.0.64/27", "10.10.0.96/27"]
+db_subnets = ["10.10.0.128/27", "10.10.0.160/27"]
+availability_zones = ["us-east=1a", "us-east-1b"]
