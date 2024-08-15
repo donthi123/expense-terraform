@@ -31,7 +31,13 @@ resource "aws_instance" "instance" {
   tags = {
     Name = var.component
   }
+  lifecycle {
+    ignore_changes = [
+    ami
+    ]
+  }
 }
+
 
 resource "null_resource" "ansible" {
   provisioner "remote-exec" {
