@@ -13,7 +13,7 @@ module "frontend" {
   lb_subnets = module.vpc.public_subnets
   app_port = 80
   bastion_nodes = var.bastion_nodes
-  server_app_port_sg_cidr = module.vpc.public_subnets
+  server_app_port_sg_cidr = var.public_subnets
   lb_app_port_sg_cidr = ["0.0.0.0/0"]
 }
 
@@ -32,8 +32,8 @@ module "backend" {
   lb_subnets = module.vpc.backend_subnets
   app_port = 8080
   bastion_nodes = var.bastion_nodes
-  server_app_port_sg_cidr = concat(module.vpc.frontend_subnets, module.vpc.backend_subnets)
-  lb_app_port_sg_cidr = module.vpc.frontend_subnets
+  server_app_port_sg_cidr = concat(var.frontend_subnets, var.backend_subnets)
+  lb_app_port_sg_cidr = var.frontend_subnets
 }
 
 
@@ -48,7 +48,7 @@ module "mysql" {
   vpc_id = module.vpc.vpc_id
   bastion_nodes = var.bastion_nodes
   app_port = 3306
-  server_app_port_sg_cidr = module.vpc.backend_subnets
+  server_app_port_sg_cidr = var.backend_subnets
 }
 
 module "vpc" {

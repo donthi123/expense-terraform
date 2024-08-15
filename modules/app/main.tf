@@ -13,7 +13,7 @@ resource "aws_security_group" "main" {
     from_port = 22
     to_port = 22
     protocol = "-1"
-    cidr_blocks = [var.bastion_nodes]
+    cidr_blocks = var.bastion_nodes
   }
   egress {
     from_port = 0
