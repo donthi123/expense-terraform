@@ -15,3 +15,22 @@ db_subnets = ["10.10.0.128/27", "10.10.0.160/27"]
 public_subnets = ["10.10.0.192/27", "10.10.0.224/27"]
 availability_zones = ["us-east-1a", "us-east-1b"]
 bastion_nodes = ["172.31.87.125/32"]
+certificate_arn = "arn:aws:acm:us-east-1:566482504879:certificate/bc635217-4c57-4178-9db4-92e13fc0cce0"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
