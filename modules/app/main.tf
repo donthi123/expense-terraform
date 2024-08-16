@@ -87,12 +87,22 @@ resource "aws_security_group" "load-balancer" {
   description = "${var.component}-${var.env}lb--sg"
   vpc_id = var.vpc_id
 
-  ingress {
-    from_port = var.app_port
-    to_port = var.app_port
-    protocol = "TCP"
-    cidr_blocks = var.lb_app_port_sg_cidr
+  dynamic "ingress" {
+    for_each = var.lb_ports
+    content {
+      from_port = ingress.value
+      to_port = ingress.value
+      protocol = "TCP"
+      cidr_blocks = var.lb_app_port_sg_cidr
+    }
   }
+
+#   ingress {
+#     from_port = var.app_port
+#     to_port = var.app_port
+#     protocol = "TCP"
+#     cidr_blocks = var.lb_app_port_sg_cidr
+#   }
   egress {
     from_port = 0
     to_port = 0
@@ -128,11 +138,11 @@ resource "aws_lb_target_group" "main" {
   deregistration_delay = 15
 
   health_check {
-    healthy_threshold = 2
-    interval = 5
-    path = "/health"
-    port = var.app_port
-    timeout = 2
+    healthy_threshold   = 2
+    interval            = 5
+    path                = "/health"
+    port                = var.app_port
+    timeout             = 2
     unhealthy_threshold = 2
   }
 }
@@ -146,7 +156,7 @@ resource "aws_lb_target_group_attachment" "main" {
 }
 
 resource "aws_lb_listener" "frontend-http" {
-  count = var.lb_needed && var.component == "frontend"? 1 : 0
+  count             = var.lb_needed && var.lb_type == "public"? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = var.app_port
   protocol          = "HTTP"
@@ -161,7 +171,7 @@ resource "aws_lb_listener" "frontend-http" {
   }
 }
 resource "aws_lb_listener" "frontend-https" {
-  count = var.lb_needed && var.component == "frontend"? 1 : 0
+  count            = var.lb_needed && var.lb_type == "public"? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = "443"
   protocol          = "HTTPS"
@@ -175,7 +185,7 @@ resource "aws_lb_listener" "frontend-https" {
 }
 
 resource "aws_lb_listener" "backend" {
-  count = var.lb_needed && var.component != "frontend"? 1 : 0
+  count             = var.lb_needed && var.lb_type != "public"? 1 : 0
   load_balancer_arn = aws_lb.main[0].arn
   port              = var.app_port
   protocol          = "HTTP"
