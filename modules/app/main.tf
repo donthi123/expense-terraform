@@ -97,12 +97,6 @@ resource "aws_security_group" "load-balancer" {
     }
   }
 
-#   ingress {
-#     from_port = var.app_port
-#     to_port = var.app_port
-#     protocol = "TCP"
-#     cidr_blocks = var.lb_app_port_sg_cidr
-#   }
   egress {
     from_port = 0
     to_port = 0
