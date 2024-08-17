@@ -23,7 +23,7 @@ resource "aws_db_parameter_group" "main" {
 
 resource "aws_db_subnet_group" "default" {
   name = "${var.component}-${var.env}-subnet-group"
-  subnet_ids = var.subnets_ids
+  subnet_ids = var.subnet_ids
 
   tags = {
     Name = "${var.component}-${var.env}-subnet-group"
