@@ -52,7 +52,7 @@ resource "aws_instance" "instance" {
 
 
 resource "null_resource" "ansible" {
-    triggers = {
+      triggers = {
       instance = aws_instance.instance.id
     }
     connection {
