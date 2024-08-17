@@ -20,7 +20,7 @@ module "frontend" {
 }
 
 module "backend" {
-  depends_on = [module.mysql]
+  depends_on = [module.rds]
   source = "./modules/app"
   instance_type = var.instance_type
   component = "backend"
@@ -41,20 +41,6 @@ module "backend" {
 }
 
 
-module "mysql" {
-  source = "./modules/app"
-  instance_type = var.instance_type
-  component = "mysql"
-  env = var.env
-  zone_id = var.zone_id
-  vault_token = var.vault_token
-  subnets = module.vpc.db_subnets
-  vpc_id = module.vpc.vpc_id
-  bastion_nodes = var.bastion_nodes
-  app_port = 3306
-  server_app_port_sg_cidr = var.backend_subnets
-}
-
 module "rds" {
   source = "./modles/rds"
 
@@ -70,8 +56,6 @@ module "rds" {
   storage_type            = "gp3"
   subnet_ids              = module.vpc.db_subnets
   vpc_id                  = module.vpc.vpc_id
-
-
 }
 
 module "vpc" {

@@ -13,6 +13,7 @@ resource "aws_db_instance" "main" {
   storage_type = var.storage_type
   publicly_accessible = false
   db_subnet_group_name = aws_db_subnet_group.default.name
+  vpc_security_group_ids = [aws_security_group.main.id]
 }
 
 resource "aws_db_parameter_group" "main" {
@@ -46,5 +47,9 @@ resource "aws_security_group" "main" {
     to_port = 0
     protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "${var.component}-${var.env}-sg"
+  }
   }
 
