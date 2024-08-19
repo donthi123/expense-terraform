@@ -17,7 +17,9 @@ availability_zones = ["us-east-1a", "us-east-1b"]
 bastion_nodes = ["172.31.87.125/32"]
 certificate_arn = "arn:aws:acm:us-east-1:566482504879:certificate/bc635217-4c57-4178-9db4-92e13fc0cce0"
 kms_key_id = "arn:aws:kms:us-east-1:566482504879:key/1cecd22b-9e6c-4ef2-ba85-51238c43c75c"
-
+#ASG
+max_capacity = 5
+min_capacity = 1
 
 
 
