@@ -68,7 +68,7 @@ resource "aws_autoscaling_policy" "main" {
 
   target_tracking_configuration {
     predefined_metric_specification {
-      predefined_metric_type = "ASGTotalCPUUtilization"
+      predefined_metric_type = "ASGAverageCPUUtilization"
     }
     target_value = 50.0
   }
