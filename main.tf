@@ -44,6 +44,20 @@
 #   lb_ports                = {http: 8080}
 #   kms_key_id              = var.kms_key_id
 # }
+module "frontend" {
+  source                   = "./modules/app-asg"
+  app_port                 = 80
+  bastion_nodes            = var.bastion_nodes
+  component                = "backend"
+  env                      = var.env
+  instance_type            = var.instance_type
+  max_capacity             = var.max_capacity
+  min_capacity             = var.min_capacity
+  server_app_port_sg_cidr  = var.public_subnets
+  subnets                  = module.vpc.frontend_subnets
+  vpc_id                   = module.vpc.vpc_id
+  vault_token              = var.vault_token
+}
 
 module "backend" {
   source                   = "./modules/app-asg"
@@ -57,6 +71,7 @@ module "backend" {
   server_app_port_sg_cidr  = concat(var.frontend_subnets, var.backend_subnets)
   subnets                  = module.vpc.backend_subnets
   vpc_id                   = module.vpc.vpc_id
+  vault_token              = var.vault_token
 }
 
 module "rds" {
