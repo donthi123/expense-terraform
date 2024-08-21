@@ -48,7 +48,7 @@
 module "backend" {
   source                   = "./modules/app-asg"
   app_port                 = 8080
-  bastion_nodes            = var.instance_type
+  bastion_nodes            = var.bastion_nodes
   component                = "backend"
   env                      = var.env
   instance_type            = var.instance_type
